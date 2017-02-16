@@ -1,0 +1,3 @@
+#! /bin/sh
+
+snmpd -Le -f -c /home/user/.snmp/snmpd.conf

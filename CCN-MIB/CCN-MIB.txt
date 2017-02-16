@@ -1,0 +1,2278 @@
+CCN-MIB DEFINITIONS ::= BEGIN
+
+--
+-- CCN-MIB designed for SNMP Gateway CCN tool 
+--
+
+  IMPORTS
+       MODULE-IDENTITY, 
+	   OBJECT-TYPE, 
+	   Counter32, 
+	   mib-2 FROM SNMPv2-SMI;	   
+
+ccnMIB    MODULE-IDENTITY
+        LAST-UPDATED    "201610280000Z"
+        ORGANIZATION    "State University of Campinas School of Electrical and Computer Engineering"
+        CONTACT-INFO    "marciel@dca.fee.unicamp.br, marciel.oliveira@gmail.com"
+        DESCRIPTION     "CCN-MIB designed for SNMP Gateway CCN tool."
+        REVISION        "201610280000Z"
+        DESCRIPTION     "Final version."
+        ::=  {  mib-2  100  }
+	
+-- the ccnSystem group
+--
+-- a collection of objects common to all managed systems.
+
+ccnSystem	OBJECT IDENTIFIER ::= {  ccnMIB  1  }
+
+	ccnsysName OBJECT-TYPE
+		SYNTAX      DisplayString (SIZE (0..255))
+		MAX-ACCESS  read-write
+		STATUS      current
+		DESCRIPTION
+				"Host name."
+		::= { ccnSystem 1 }
+
+	ccnsysUptime OBJECT-TYPE
+		SYNTAX      TimeTicks
+		MAX-ACCESS  read-only
+		STATUS      current
+		DESCRIPTION
+				"Time elapsed since the system booted, in seconds."
+		::= { ccnSystem 2 }
+
+	ccnsysLoads OBJECT-TYPE
+
+		SYNTAX      DisplayString (SIZE (0..255))
+		MAX-ACCESS  read-only
+		STATUS      current
+		DESCRIPTION
+				"1, 5, and 15 minute load averages."
+		::= { ccnSystem 3 }
+
+	ccnsysTotalram OBJECT-TYPE
+		SYNTAX      DisplayString (SIZE (0..255))
+		MAX-ACCESS  read-only
+		STATUS      current
+		DESCRIPTION
+				"Total usable main memory size."
+		::= { ccnSystem 4 }
+
+	ccnsysFreeram OBJECT-TYPE
+		SYNTAX      DisplayString (SIZE (0..255))
+		MAX-ACCESS  read-only
+		STATUS      current
+		DESCRIPTION
+				"Available memory size."
+		::= { ccnSystem 5 }
+
+	ccnsysSharedram OBJECT-TYPE
+		SYNTAX      DisplayString (SIZE (0..255))
+		MAX-ACCESS  read-only
+		STATUS      current
+		DESCRIPTION
+				"Amount of shared memory."
+		::= { ccnSystem 6 }
+		
+	ccnsysBufferram OBJECT-TYPE
+		SYNTAX      DisplayString (SIZE (0..255))
+		MAX-ACCESS  read-only
+		STATUS      current
+		DESCRIPTION
+				"Memory used by buffers."
+		::= { ccnSystem 7 }	
+		
+	ccnsysTotalswap OBJECT-TYPE
+		SYNTAX      DisplayString (SIZE (0..255))
+		MAX-ACCESS  read-only
+		STATUS      current
+		DESCRIPTION
+				"Total swap space size."
+		::= { ccnSystem 8 }	
+		
+	ccnsysFreeswap OBJECT-TYPE
+		SYNTAX      DisplayString (SIZE (0..255))
+		MAX-ACCESS  read-only
+		STATUS      current
+		DESCRIPTION
+				"Swap space still available."
+		::= { ccnSystem 9 }	
+		
+	ccnsysProcs OBJECT-TYPE
+		SYNTAX      DisplayString (SIZE (0..255))
+		MAX-ACCESS  read-only
+		STATUS      current
+		DESCRIPTION
+				"Number of current processes."
+		::= { ccnSystem 10 }	
+		
+	ccnsysTotalhigh OBJECT-TYPE
+		SYNTAX      DisplayString (SIZE (0..255))
+		MAX-ACCESS  read-only
+		STATUS      current
+		DESCRIPTION
+				"Total high memory size."
+		::= { ccnSystem 11 }	
+		
+	ccnsysFreehigh OBJECT-TYPE
+		SYNTAX      DisplayString (SIZE (0..255))
+		MAX-ACCESS  read-only
+		STATUS      current
+		DESCRIPTION
+				"Available high memory size."
+		::= { ccnSystem 12 }	
+		
+	ccnsysMemunit OBJECT-TYPE
+		SYNTAX      DisplayString (SIZE (0..255))
+		MAX-ACCESS  read-only
+		STATUS      current
+		DESCRIPTION
+				"Memory unit size in bytes."
+		::= { ccnSystem 13 }	
+		
+	ccnsysCharf OBJECT-TYPE
+		SYNTAX      DisplayString (SIZE (0..255))
+		MAX-ACCESS  read-only
+		STATUS      current
+		DESCRIPTION
+				"Padding to 64 bytes."
+		::= { ccnSystem 14 }	
+	
+--
+-- a collection of objects which describe the CCNd Status Protocol entity's
+--
+	
+ccndStatus	OBJECT IDENTIFIER ::=  {  ccnMIB 2  }
+	
+	contentItems	OBJECT IDENTIFIER ::=  {  ccndStatus  1  }	
+		
+		ciAccessioned OBJECT-TYPE
+			SYNTAX     DisplayString (SIZE (0..255))
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of Content Objects accessioned."
+			::= { contentItems 1 }
+
+		ciDuplicate OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of duplicate Content Objects."
+			::= { contentItems 2 }
+	
+		ciSent OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+				"Number of sent Interests."
+			::= { contentItems 3 }
+
+		ciSparse OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+				"Number of Content Objects marked as sparse."
+			::= { contentItems 4 }
+	
+		ciStale OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of Content Objects marked as stale."
+			::= { contentItems 5 }
+	
+		ciStored OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of Content Objects stored."
+			::= { contentItems 6 }
+	
+		ciHost OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { contentItems 7 }
+	
+		ciTimestamp OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { contentItems 8 }
+	
+	interests	OBJECT IDENTIFIER ::=  {  ccndStatus  2  }	
+		
+		iNames OBJECT-TYPE
+			SYNTAX     DisplayString (SIZE (0..255))
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of Interest names."
+			::= { interests 1 }
+
+		iNoted OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of noted Interests."
+			::= { interests 2 }
+		
+		iPending OBJECT-TYPE
+			SYNTAX     TimeTicks
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of pending Interests."
+			::= { interests 3 }
+
+		iPropagating OBJECT-TYPE
+			SYNTAX     TimeTicks
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of propagating Interests."
+			::= { interests 4 }
+		
+		iHost OBJECT-TYPE
+			SYNTAX     TimeTicks
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { interests 5 }
+		
+		iTimestamp OBJECT-TYPE
+			SYNTAX     TimeTicks
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { interests 6 }
+		
+	interestTotals OBJECT IDENTIFIER ::=  {  ccndStatus  3 }
+		
+		itAccepted OBJECT-TYPE
+			SYNTAX     DisplayString (SIZE (0..255))
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of accepted Interests."
+			::= { interestTotals 1 }
+		
+		itDropped OBJECT-TYPE
+			SYNTAX     DisplayString (SIZE (0..255))
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of dropped Interests."
+			::= { interestTotals 2 }
+		
+		itSent OBJECT-TYPE
+			SYNTAX     DisplayString (SIZE (0..255))
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of sent Interests."
+			::= { interestTotals 3 }
+		
+		itStuffed OBJECT-TYPE
+			SYNTAX     DisplayString (SIZE (0..255))
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of stuffed Interests."
+			::= { interestTotals 4 }
+		
+		itHost OBJECT-TYPE
+			SYNTAX     DisplayString (SIZE (0..255))
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { interestTotals 5 }
+		
+		itTimestamp OBJECT-TYPE
+			SYNTAX     DisplayString (SIZE (0..255))
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { interestTotals 6 }
+	
+	faces OBJECT IDENTIFIER ::=  {  ccndStatus  4 }
+
+		fFace0 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceInOctet."
+			::= { faces 1 }
+
+		fFlags0 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutOctet."
+			::= { faces 2 }
+		
+		fLocal0 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceInPacket."
+			::= { faces 3 }
+
+		fPending0 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutPacket."
+			::= { faces 4 }
+			
+		fRemote0 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutPacket."
+			::= { faces 5 }
+			
+		fHost0 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { faces 6 }
+		
+		fTimestamp0 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { faces 7 }
+			
+		fFace1 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceInOctet."
+			::= { faces 8 }
+
+		fFlags1 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutOctet."
+			::= { faces 9 }
+		
+		fLocal1 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceInPacket."
+			::= { faces 10 }
+
+		fPending1 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutPacket."
+			::= { faces 11 }
+			
+		fRemote1 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutPacket."
+			::= { faces 12 }
+			
+		fHost1 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { faces 13 }
+		
+		fTimestamp1 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { faces 14 }
+			
+		fFace2 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceInOctet."
+			::= { faces 15 }
+
+		fFlags2 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutOctet."
+			::= { faces 16 }
+		
+		fLocal2 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceInPacket."
+			::= { faces 17 }
+
+		fPending2 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutPacket."
+			::= { faces 18 }
+			
+		fRemote2 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutPacket."
+			::= { faces 19 }
+			
+		fHost2 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { faces 20 }
+		
+		fTimestamp2 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { faces 21 }
+		
+		fFace3 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceInOctet."
+			::= { faces 22 }
+
+		fFlags3 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutOctet."
+			::= { faces 23 }
+		
+		fLocal3 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceInPacket."
+			::= { faces 24 }
+
+		fPending3 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutPacket."
+			::= { faces 25 }
+			
+		fRemote3 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutPacket."
+			::= { faces 26 }
+			
+		fHost3 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { faces 27 }
+		
+		fTimestamp3 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { faces 28 }
+
+		fFace4 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceInOctet."
+			::= { faces 29 }
+
+		fFlags4 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutOctet."
+			::= { faces 30 }
+		
+		fLocal4 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceInPacket."
+			::= { faces 31 }
+
+		fPending4 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutPacket."
+			::= { faces 32 }
+			
+		fRemote4 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutPacket."
+			::= { faces 33 }
+			
+		fHost4 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { faces 34 }
+		
+		fTimestamp4 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { faces 35 }
+
+		fFace5 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceInOctet."
+			::= { faces 36 }
+
+		fFlags5 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutOctet."
+			::= { faces 37 }
+		
+		fLocal5 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceInPacket."
+			::= { faces 38 }
+
+		fPending5 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutPacket."
+			::= { faces 39 }
+			
+		fRemote5 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutPacket."
+			::= { faces 40 }
+			
+		fHost5 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { faces 41 }
+		
+		fTimestamp5 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { faces 42 }
+			
+		fFace6 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceInOctet."
+			::= { faces 43 }
+
+		fFlags6 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutOctet."
+			::= { faces 44 }
+		
+		fLocal6 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceInPacket."
+			::= { faces 45 }
+
+		fPending6 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutPacket."
+			::= { faces 46 }
+			
+		fRemote6 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutPacket."
+			::= { faces 47 }
+			
+		fHost6 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { faces 48 }
+		
+		fTimestamp6 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { faces 49 }
+			
+		fFace7 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceInOctet."
+			::= { faces 50 }
+
+		fFlags7 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutOctet."
+			::= { faces 51 }
+		
+		fLocal7 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceInPacket."
+			::= { faces 52 }
+
+		fPending7 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutPacket."
+			::= { faces 53 }
+			
+		fRemote7 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutPacket."
+			::= { faces 54 }
+			
+		fHost7 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { faces 55 }
+		
+		fTimestamp7 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { faces 56 }
+			
+		fFace8 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceInOctet."
+			::= { faces 57 }
+
+		fFlags8 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutOctet."
+			::= { faces 58 }
+		
+		fLocal8 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceInPacket."
+			::= { faces 59 }
+
+		fPending8 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutPacket."
+			::= { faces 60 }
+			
+		fRemote8 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutPacket."
+			::= { faces 61 }
+			
+		fHost8 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { faces 62 }
+		
+		fTimestamp8 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { faces 63 }
+			
+		fFace9 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceInOctet."
+			::= { faces 64 }
+
+		fFlags9 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutOctet."
+			::= { faces 65 }
+		
+		fLocal9 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceInPacket."
+			::= { faces 66 }
+
+		fPending9 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutPacket."
+			::= { faces 67 }
+			
+		fRemote9 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutPacket."
+			::= { faces 69 }
+			
+		fHost9 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { faces 69 }
+		
+		fTimestamp9 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { faces 70 }
+			
+		fFace10 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceInOctet."
+			::= { faces 71 }
+
+		fFlags10 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutOctet."
+			::= { faces 72 }
+		
+		fLocal10 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceInPacket."
+			::= { faces 73 }
+
+		fPending10 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutPacket."
+			::= { faces 74 }
+			
+		fRemote10 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutPacket."
+			::= { faces 75 }
+			
+		fHost10 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { faces 76 }
+		
+		fTimestamp10 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { faces 77 }
+			
+		fFace11 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceInOctet."
+			::= { faces 78 }
+
+		fFlags11 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutOctet."
+			::= { faces 79 }
+		
+		fLocal11 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceInPacket."
+			::= { faces 80 }
+
+		fPending11 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutPacket."
+			::= { faces 81 }
+			
+		fRemote11 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutPacket."
+			::= { faces 82 }
+			
+		fHost11 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { faces 83 }
+		
+		fTimestamp11 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { faces 84 }
+			
+		fFace12 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceInOctet."
+			::= { faces 85 }
+
+		fFlags12 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutOctet."
+			::= { faces 86 }
+		
+		fLocal12 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceInPacket."
+			::= { faces 87 }
+
+		fPending12 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutPacket."
+			::= { faces 88 }
+			
+		fRemote12 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutPacket."
+			::= { faces 89 }
+			
+		fHost12 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { faces 90 }
+		
+		fTimestamp12 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { faces 91 }
+			
+		fFace13 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceInOctet."
+			::= { faces 92 }
+
+		fFlags13 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutOctet."
+			::= { faces 93 }
+		
+		fLocal13 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceInPacket."
+			::= { faces 94 }
+
+		fPending13 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutPacket."
+			::= { faces 95 }
+			
+		fRemote13 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of faceOutPacket."
+			::= { faces 96 }
+			
+		fHost13 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { faces 97 }
+		
+		fTimestamp13 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { faces 98 }
+	
+	faceActivityRates OBJECT IDENTIFIER ::=  {  ccndStatus  5 }
+
+		farFace0 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of face."
+			::= { faceActivityRates 1 }
+
+		farBytesIn0 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of bytes in."
+			::= { faceActivityRates 2 }
+			
+		farBytesOut0 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of bytes out."
+			::= { faceActivityRates 3 }
+
+		farReceivedData0 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					" Number of Content Objects in."
+			::= { faceActivityRates 4 }
+			
+		farSentData0 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					" Number of Content Objects out."
+			::= { faceActivityRates 5 }
+			
+		farInterestsReceived0 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of Interests in."
+			::= { faceActivityRates 6 }
+			
+		farInterestsSent0 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of Interests out."
+			::= { faceActivityRates 7 }
+			
+		farHost0 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { faceActivityRates 8 }
+			
+		farTimestamp0 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { faceActivityRates 9 }
+			
+		farFace1 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of face."
+			::= { faceActivityRates 10 }
+
+		farBytesIn1 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of bytes in."
+			::= { faceActivityRates 11 }
+			
+		farBytesOut1 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of bytes out."
+			::= { faceActivityRates 12 }
+
+		farReceivedData1 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					" Number of Content Objects in."
+			::= { faceActivityRates 13 }
+			
+		farSentData1 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					" Number of Content Objects out."
+			::= { faceActivityRates 14 }
+			
+		farInterestsReceived1 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of Interests in."
+			::= { faceActivityRates 15 }
+			
+		farInterestsSent1 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of Interests out."
+			::= { faceActivityRates 16 }
+			
+		farHost1 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { faceActivityRates 17 }
+			
+		farTimestamp1 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { faceActivityRates 18 }
+			
+		farFace2 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of face."
+			::= { faceActivityRates 19 }
+
+		farBytesIn2 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of bytes in."
+			::= { faceActivityRates 20 }
+			
+		farBytesOut2 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of bytes out."
+			::= { faceActivityRates 21 }
+
+		farReceivedData2 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					" Number of Content Objects in."
+			::= { faceActivityRates 22 }
+			
+		farSentData2 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					" Number of Content Objects out."
+			::= { faceActivityRates 23 }
+			
+		farInterestsReceived2 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of Interests in."
+			::= { faceActivityRates 24 }
+			
+		farInterestsSent2 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of Interests out."
+			::= { faceActivityRates 25 }
+			
+		farHost2 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { faceActivityRates 26 }
+			
+		farTimestamp2 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { faceActivityRates 27 }
+			
+		farFace3 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of face."
+			::= { faceActivityRates 28 }
+
+		farBytesIn3 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of bytes in."
+			::= { faceActivityRates 29 }
+			
+		farBytesOut3 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of bytes out."
+			::= { faceActivityRates 30 }
+
+		farReceivedData3 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					" Number of Content Objects in."
+			::= { faceActivityRates 31 }
+			
+		farSentData3 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					" Number of Content Objects out."
+			::= { faceActivityRates 32 }
+			
+		farInterestsReceived3 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of Interests in."
+			::= { faceActivityRates 33 }
+			
+		farInterestsSent3 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of Interests out."
+			::= { faceActivityRates 34 }
+			
+		farHost3 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { faceActivityRates 35 }
+			
+		farTimestamp3 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { faceActivityRates 36 }
+			
+		farFace4 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of face."
+			::= { faceActivityRates 37 }
+
+		farBytesIn4 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of bytes in."
+			::= { faceActivityRates 38 }
+			
+		farBytesOut4 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of bytes out."
+			::= { faceActivityRates 39 }
+
+		farReceivedData4 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					" Number of Content Objects in."
+			::= { faceActivityRates 40 }
+			
+		farSentData4 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					" Number of Content Objects out."
+			::= { faceActivityRates 41 }
+			
+		farInterestsReceived4 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of Interests in."
+			::= { faceActivityRates 42 }
+			
+		farInterestsSent4 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of Interests out."
+			::= { faceActivityRates 43 }
+			
+		farHost4 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { faceActivityRates 44 }
+			
+		farTimestamp4 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { faceActivityRates 45 }
+		farFace5 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of face."
+			::= { faceActivityRates 46 }
+
+		farBytesIn5 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of bytes in."
+			::= { faceActivityRates 47 }
+			
+		farBytesOut5 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of bytes out."
+			::= { faceActivityRates 48 }
+
+		farReceivedData5 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					" Number of Content Objects in."
+			::= { faceActivityRates 49 }
+			
+		farSentData5 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					" Number of Content Objects out."
+			::= { faceActivityRates 50 }
+			
+		farInterestsReceived5 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of Interests in."
+			::= { faceActivityRates 51 }
+			
+		farInterestsSent5 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of Interests out."
+			::= { faceActivityRates 52 }
+			
+		farHost5 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { faceActivityRates 53 }
+			
+		farTimestamp5 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { faceActivityRates 54 }
+			
+		farFace6 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of face."
+			::= { faceActivityRates 55 }
+
+		farBytesIn6 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of bytes in."
+			::= { faceActivityRates 56 }
+			
+		farBytesOut6 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of bytes out."
+			::= { faceActivityRates 57 }
+
+		farReceivedData6 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					" Number of Content Objects in."
+			::= { faceActivityRates 58 }
+			
+		farSentData6 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					" Number of Content Objects out."
+			::= { faceActivityRates 59 }
+			
+		farInterestsReceived6 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of Interests in."
+			::= { faceActivityRates 60 }
+			
+		farInterestsSent6 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of Interests out."
+			::= { faceActivityRates 61 }
+			
+		farHost6 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { faceActivityRates 62 }
+			
+		farTimestamp6 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { faceActivityRates 63 }
+			
+		farFace7 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of face."
+			::= { faceActivityRates 64 }
+
+		farBytesIn7 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of bytes in."
+			::= { faceActivityRates 65 }
+			
+		farBytesOut7 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of bytes out."
+			::= { faceActivityRates 66 }
+
+		farReceivedData7 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					" Number of Content Objects in."
+			::= { faceActivityRates 67 }
+			
+		farSentData7 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					" Number of Content Objects out."
+			::= { faceActivityRates 68 }
+			
+		farInterestsReceived7 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of Interests in."
+			::= { faceActivityRates 69 }
+			
+		farInterestsSent7 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of Interests out."
+			::= { faceActivityRates 70 }
+			
+		farHost7 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { faceActivityRates 71 }
+			
+		farTimestamp7 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { faceActivityRates 72 }
+			
+		farFace8 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter of face."
+			::= { faceActivityRates 73 }
+
+		farBytesIn8 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of bytes in."
+			::= { faceActivityRates 74 }
+			
+		farBytesOut8 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of bytes out."
+			::= { faceActivityRates 75 }
+
+		farReceivedData8 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					" Number of Content Objects in."
+			::= { faceActivityRates 76 }
+			
+		farSentData8 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					" Number of Content Objects out."
+			::= { faceActivityRates 77 }
+			
+		farInterestsReceived8 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of Interests in."
+			::= { faceActivityRates 78 }
+			
+		farInterestsSent8 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Number of Interests out."
+			::= { faceActivityRates 79 }
+			
+		farHost8 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { faceActivityRates 80 }
+			
+		farTimestamp8 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { faceActivityRates 81 }
+			
+	forwarding OBJECT IDENTIFIER ::=  {  ccndStatus 6 }
+
+		fwFace0 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current FIB Prefix Name."
+			::= { forwarding 1 }
+
+		fwFlags0 OBJECT-TYPE
+			SYNTAX     TimeTicks
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter FIB Expire Time."
+			::= { forwarding 2 }
+			
+		fwPath0 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current path."
+			::= { forwarding 3 }
+
+		fwExpires0 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Also known as Freshness Seconds, the remaining lifetime on the face."
+			::= { forwarding 4 }	
+			
+		fwHost0 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { forwarding 5 }
+			
+		fwTimestamp0 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { forwarding 6 }
+			
+		fwFace1 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current FIB Prefix Name."
+			::= { forwarding 7 }
+
+		fwFlags1 OBJECT-TYPE
+			SYNTAX     TimeTicks
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter FIB Expire Time."
+			::= { forwarding 8 }
+			
+		fwPath1 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current path."
+			::= { forwarding 9 }
+
+		fwExpires1 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Also known as Freshness Seconds, the remaining lifetime on the face."
+			::= { forwarding 10 }	
+			
+		fwHost1 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { forwarding 11 }
+			
+		fwTimestamp1 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { forwarding 12 }
+			
+		fwFace2 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current FIB Prefix Name."
+			::= { forwarding 13 }
+
+		fwFlags2 OBJECT-TYPE
+			SYNTAX     TimeTicks
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter FIB Expire Time."
+			::= { forwarding 14 }
+			
+		fwPath2 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current path."
+			::= { forwarding 15 }
+
+		fwExpires2 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Also known as Freshness Seconds, the remaining lifetime on the face."
+			::= { forwarding 16 }	
+			
+		fwHost2 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { forwarding 17 }
+			
+		fwTimestamp2 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { forwarding 18 }
+			
+		fwFace3 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current FIB Prefix Name."
+			::= { forwarding 19 }
+
+		fwFlags3 OBJECT-TYPE
+			SYNTAX     TimeTicks
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter FIB Expire Time."
+			::= { forwarding 20 }
+			
+		fwPath3 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current path."
+			::= { forwarding 21 }
+
+		fwExpires3 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Also known as Freshness Seconds, the remaining lifetime on the face."
+			::= { forwarding 22 }	
+			
+		fwHost3 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { forwarding 23 }
+			
+		fwTimestamp3 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { forwarding 24 }
+			
+		fwFace4 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current FIB Prefix Name."
+			::= { forwarding 25 }
+
+		fwFlags4 OBJECT-TYPE
+			SYNTAX     TimeTicks
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter FIB Expire Time."
+			::= { forwarding 26 }
+			
+		fwPath4 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current path."
+			::= { forwarding 27 }
+
+		fwExpires4 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Also known as Freshness Seconds, the remaining lifetime on the face."
+			::= { forwarding 28 }	
+			
+		fwHost4 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { forwarding 29 }
+			
+		fwTimestamp4 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { forwarding 30 }
+			
+		fwFace5 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current FIB Prefix Name."
+			::= { forwarding 31 }
+
+		fwFlags5 OBJECT-TYPE
+			SYNTAX     TimeTicks
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter FIB Expire Time."
+			::= { forwarding 32 }
+			
+		fwPath5 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current path."
+			::= { forwarding 33 }
+
+		fwExpires5 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Also known as Freshness Seconds, the remaining lifetime on the face."
+			::= { forwarding 34 }	
+			
+		fwHost5 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { forwarding 35 }
+			
+		fwTimestamp5 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { forwarding 36 }
+			
+		fwFace6 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current FIB Prefix Name."
+			::= { forwarding 37 }
+
+		fwFlags6 OBJECT-TYPE
+			SYNTAX     TimeTicks
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter FIB Expire Time."
+			::= { forwarding 38 }
+			
+		fwPath6 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current path."
+			::= { forwarding 39 }
+
+		fwExpires6 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Also known as Freshness Seconds, the remaining lifetime on the face."
+			::= { forwarding 40 }	
+			
+		fwHost6 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { forwarding 41 }
+			
+		fwTimestamp6 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { forwarding 42 }
+			
+		fwFace7 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current FIB Prefix Name."
+			::= { forwarding 43 }
+
+		fwFlags7 OBJECT-TYPE
+			SYNTAX     TimeTicks
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter FIB Expire Time."
+			::= { forwarding 44 }
+			
+		fwPath7 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current path."
+			::= { forwarding 45 }
+
+		fwExpires7 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Also known as Freshness Seconds, the remaining lifetime on the face."
+			::= { forwarding 46 }	
+			
+		fwHost7 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { forwarding 47 }
+			
+		fwTimestamp7 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { forwarding 48 }
+			
+		fwFace8 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current FIB Prefix Name."
+			::= { forwarding 49 }
+
+		fwFlags8 OBJECT-TYPE
+			SYNTAX     TimeTicks
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter FIB Expire Time."
+			::= { forwarding 50 }
+			
+		fwPath8 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current path."
+			::= { forwarding 51 }
+
+		fwExpires8 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Also known as Freshness Seconds, the remaining lifetime on the face."
+			::= { forwarding 52 }	
+			
+		fwHost8 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { forwarding 53 }
+			
+		fwTimestamp8 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { forwarding 54 }
+			
+		fwFace9 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current FIB Prefix Name."
+			::= { forwarding 55 }
+
+		fwFlags9 OBJECT-TYPE
+			SYNTAX     TimeTicks
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter FIB Expire Time."
+			::= { forwarding 56 }
+			
+		fwPath9 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current path."
+			::= { forwarding 57 }
+
+		fwExpires9 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Also known as Freshness Seconds, the remaining lifetime on the face."
+			::= { forwarding 58 }	
+			
+		fwHost9 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { forwarding 59 }
+			
+		fwTimestamp9 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { forwarding 60 }
+			
+		fwFace10 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current FIB Prefix Name."
+			::= { forwarding 61 }
+
+		fwFlags10 OBJECT-TYPE
+			SYNTAX     TimeTicks
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current counter FIB Expire Time."
+			::= { forwarding 62 }
+			
+		fwPath10 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current path."
+			::= { forwarding 63 }
+
+		fwExpires10 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"Also known as Freshness Seconds, the remaining lifetime on the face."
+			::= { forwarding 64 }	
+			
+		fwHost10 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The current host."
+			::= { forwarding 65 }
+			
+		fwTimestamp10 OBJECT-TYPE
+			SYNTAX     Counter32
+			MAX-ACCESS read-only
+			STATUS     current
+			DESCRIPTION
+					"The timestamp (YYYY-MM-DDTHH:MM:SS.xxxxZ)."
+			::= { forwarding 66 }
+
+END
