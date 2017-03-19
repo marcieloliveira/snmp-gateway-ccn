@@ -4,7 +4,7 @@
 
 #### What is SNMP Gateway CCN?
 
-SNMP Gateway CCN is a tool allow management CCN (Content-Centric Network) nodes through the SNMP gateway. The gateway translates *SNMP Request* messages to CCNx *Interest* messages, then send to CCN network for native routing mechanism based on name/data. Them when a message arrives at the destination node, one *Data* message as a response is built for each request and the messages are sent on the opposite way to the gateway. The gateway translates the message *Data* to *SNMP Response* message and delivery to NMS Server.
+SNMP Gateway CCN is a tool allow management CCN (Content-Centric Network) nodes through the SNMP gateway. The gateway translates *SNMP Request* messages to CCNx *Interest* messages, then send to CCN network for native routing mechanism based on name/data. When a message arrives at the destination node, one *Data* message as a response is built for each request and the messages are sent on the opposite way to the gateway. The gateway translates the message *Data* to *SNMP Response* message and delivery to NMS Server.
 
 #### Environment versions 
 - Linux Ubuntu 15.04 64bits (Vivid Vervet)
