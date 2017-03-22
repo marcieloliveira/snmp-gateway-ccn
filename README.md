@@ -4,7 +4,7 @@
 
 #### What is SNMP Gateway CCN?
 
-SNMP Gateway CCN is a tool allow management CCN (Content-Centric Network) nodes through the SNMP gateway. The gateway translates *SNMP Request* messages to CCNx *Interest* messages, then send to CCN network for native routing mechanism based on name/data. When a message arrives at the destination node, one *Data* message as a response is built for each request and the messages are sent on the opposite way to the gateway. The gateway translates the message *Data* to *SNMP Response* message and delivery to NMS Server.
+SNMP Gateway CCN is a tool for management CCN (Content-Centric Network) nodes through the SNMP gateway. The gateway translates *SNMP Request* messages to CCNx *Interest* messages, then send to CCN network for native routing mechanism based on name/data. When a message arrives at the destination node, one *Data* message as a response is built for each request and the messages are sent on the opposite way to the gateway. The gateway translates the message *Data* to *SNMP Response* message and delivery to NMS Server.
 
 #### Environment versions 
 - Linux Ubuntu 15.04 64bits (Vivid Vervet)
@@ -18,7 +18,7 @@ SNMP Gateway CCN is a tool allow management CCN (Content-Centric Network) nodes 
 
 #### SNMP Gateway CCN running on MiniCCNx platform
 
-To start SNMP Gateway CCN is necessary to open tool MiniccnxEdit (is a graphical front-end for MiniCCNx platform) according follow command line.
+To start SNMP Gateway CCN is necessary to open tool MiniccnxEdit (graphical front-end for MiniCCNx platform) according follow command line.
 
 ```
 # sudo miniccnxedit
@@ -29,7 +29,7 @@ The window below will be open.
 
 #### Openning the topology
 
-The reference topology was built with all environment settings for ten nodes and saved into config file to reload when necessary. To be open the config file just click on the menu *File->Open* and select the config file with *.mnccnx extension.
+Reference topology was built with all environment settings for 10 nodes and saved into config file to reload when necessary. Inorder to open config file, just click on menu *File->Open* and select config file *.mnccnx.
 
 ![fig2](https://github.com/marcieloliveira/snmp-gateway-ccn/blob/master/screenshot/fig2.jpg)
 
@@ -41,7 +41,7 @@ To starting topology just click on *Run* button on the lower corner left.
 
 #### Reference topology 
 
-The reference topology was built with 10 nodes, distributed on ring topology and some linear remote nodes. Each node has a name with **r** (router) plus number *1-10*. The SNMP Gateway CCN tool shall be running on the **r1** node. 
+The reference topology was built with 10 nodes, distributed on ring topology and some linear remote nodes. Each node has a name with **r** (router) plus number *1-10*.  
 
 ![fig4](https://github.com/marcieloliveira/snmp-gateway-ccn/blob/master/screenshot/fig4.jpg)
 
@@ -49,20 +49,20 @@ The reference topology was built with 10 nodes, distributed on ring topology and
 
 The CCN Agent has started automatically on each CCN node during MiniCCNx topology starting. 
 
-Is possible verify that instances of CCN Agent are running on each CCN node by the follow command line in any CCN node container.
+It is possible to verify all instances CCN Agent that are running on each CCN node by the follow command line in any CCN node container.
 
 ```
 # ps -aux | grep ccna 
 ```  
 
-The command results show on screenshot bellow. 
+Command line results show on screenshot bellow. 
 
 ![fig5](https://github.com/marcieloliveira/snmp-gateway-ccn/blob/master/screenshot/fig5.jpg)
 
 
 #### Starting SNMP Agent on network element gateway (r1)
 
-The SNMP Agent extended by this work is based on Net-SNMP v5.7.2 application that was compiled to mapping CCN MIB OIDs.
+The SNMP Agent represents gateway between NMS and CCN Network is based on Net-SNMP v5.7.2 application that was compiled to mapping CCN MIB OIDs.
 
 First of all, the Net-SNMP shall be installed and setting up according to config file *snmpd.conf* as a bellow.
 
@@ -162,7 +162,15 @@ The SNMP Gateway CCN started and ready to consult CCN nodes!
 
 ![fig15](https://github.com/marcieloliveira/snmp-gateway-ccn/blob/master/screenshot/fig15.jpg)
 
+## SNMP Gateway CCN presentation
+
+Watch a brief presentation of tool, access link below.
+https://youtu.be/vIfCsDhPoS0
+
 ## Contacts
 
 Contact the main author Marciel Oliveira (marciel.oliveira@gmail.com) or Prof. Christian Esteve Rothenberg (chesteve@dca.fee.unicamp.br).
+
+
+
 
