@@ -16,13 +16,36 @@ SNMP Gateway CCN is a tool for management CCN (Content-Centric Network) nodes th
 - SnmpB v0.8 (MIB Browser)
 - Wireshark v1.6.2
 
+#### PC Specifications for Virtual Machine
+- VMware Workstation 12 Player
+- Windows 7 or Windows 10 64 bits
+- Intel Core i5-2450M CPU 2.5GHz
+- 8GB RAM
+
+#### Acess Linux Virtual Machine
+
+```
+# Login: user
+# Passwd: user
+``` 
+
+#### Make sure that influxdb was started. 
+
+If is necessary, start influxDB according following command line.
+
+```
+# sudo /etc/init.d/influxdb start  
+``` 
+
 #### SNMP Gateway CCN running on MiniCCNx platform
 
 To start SNMP Gateway CCN is necessary to open tool MiniccnxEdit (graphical front-end for MiniCCNx platform) according follow command line.
 
 ```
 # sudo miniccnxedit
+# passwd: user
 ``` 
+
 The window below will be open.
 
 ![fig1](https://github.com/marcieloliveira/snmp-gateway-ccn/blob/master/screenshot/fig1.jpg)
