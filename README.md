@@ -22,10 +22,14 @@ SNMP Gateway CCN is a tool for management CCN (Content-Centric Network) nodes th
 - Intel Core i5-2450M CPU 2.5GHz
 - 8GB RAM
 
-#### Acess Linux Virtual Machine
+#### Using a Virtual Machine
+
+For downloading a pre-configured Virtual Machine clique on the link below.
+
+Follow username and password:
 
 ```
-# Login: user
+# Username: user
 # Passwd: user
 ``` 
 
@@ -187,7 +191,7 @@ The SNMP Gateway CCN started and ready to consult CCN nodes!
 
 ## SNMP Gateway CCN presentation
 
-Watch a brief presentation of tool, access link below.
+Watch a brief presentation of tool, access link below.\
 https://youtu.be/vIfCsDhPoS0
 
 ## Contacts
