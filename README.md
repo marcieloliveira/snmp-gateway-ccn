@@ -24,7 +24,7 @@ SNMP Gateway CCN is a tool for management CCN (Content-Centric Network) nodes th
 
 #### Using a pre-configured Virtual Machine
 
-For downloading a pre-configured Virtual Machine clique on the link below.\
+For downloading a pre-configured Virtual Machine, clique on the link below.\
 https://goo.gl/0IzdXr
 
 Follow username and password:
